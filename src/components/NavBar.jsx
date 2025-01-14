@@ -25,12 +25,21 @@ function NavBar() {
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img src={logoImg} className="h-10 aspect-square" alt="EarthBound" />
+          <img
+            src={logoImg}
+            className="h-10 scale-150 aspect-square dark:invert"
+            alt="EarthBound"
+          />
           <span className="self-center text-3xl font-semibold whitespace-nowrap font-coiny">
             GetPet
           </span>
         </Link>
 
+        <div className="flex-1 flex items-center justify-end lg:hidden mr-3">
+          <div>
+            <LightDarkToggle />
+          </div>
+        </div>
         <button
           onClick={toggleMenu}
           type="button"
@@ -57,12 +66,16 @@ function NavBar() {
         <div
           className={`${
             isMenuOpen ? "block" : "hidden"
-          } w-full lg:w-auto lg:flex lg:justify-end absolute lg:static top-full z-50 bg-nav dark:bg-nav-dark border-4 lg:border-0 border-nav right-0 left-0 py-4 lg:py-0 lg:px-0 lg:bg-transparent`}
+          } w-full lg:w-auto lg:flex lg:justify-end absolute lg:static top-full z-50 bg-nav dark:bg-nav-dark p-4 lg:border-0 border-nav right-0 left-0 lg:py-0 lg:px-0 lg:bg-transparent bg-secondary dark:bg-dark-secondary`}
         >
           <ul
             className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-white rounded-lg bg-nav-bg lg:flex-row md:space-x-2 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-nav-bg text-center"
             onClick={toggleMenu}
           >
+            <li className="hidden lg:block">
+              <LightDarkToggle />
+            </li>
+
             <li>
               <NavLink to="/" className={activeClass}>
                 Home
@@ -119,10 +132,6 @@ function NavBar() {
                 </NavLink>
               </li>
             )} */}
-
-            <li>
-              <LightDarkToggle />
-            </li>
           </ul>
         </div>
 
