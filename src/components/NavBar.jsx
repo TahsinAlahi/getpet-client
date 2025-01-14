@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router";
 import logoImg from "../assets/logo.png";
-// import { useAuth } from "../providers/AuthProvider";
+import { useAuth } from "../providers/AuthProvider";
 import LightDarkToggle from "./LightDarkToggle";
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // const { user, logout } = useAuth();
+  const { user, logout } = useAuth();
 
   function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
