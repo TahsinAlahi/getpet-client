@@ -5,12 +5,32 @@ import { useRef, useState } from "react";
 import { useAuth } from "../providers/AuthProvider";
 import Lottie from "lottie-react";
 import signupAnimation from "../assets/signup_lottie.json";
+import passwordValidator from "../utils/passwordValidator";
+import { toast } from "react-toastify";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const formRef = useRef(null);
-
+  const { registerWithEmail } = useAuth();
+  const navigate = useNavigate();
   const { state } = useLocation();
+
+  async function handleRegister(e) {
+    e.preventDefault();
+
+    const formData = new FormData(formRef.current);
+    const { email, username, password, imageUrl } =
+      Object.fromEntries(formData);
+
+    if (!passwordValidator(password)) {
+      toast.error("Try a stronger password!");
+      return;
+    }
+
+    const res = await registerWithEmail(username, email, password, imageUrl);
+
+    if (res.status === "success") navigate(state.from || "/");
+  }
 
   return (
     <main className="bg-primary dark:bg-dark-primary min-h-screen max-w-screen-xl mx-auto text-black dark:text-white font-openSans py-10">
@@ -25,7 +45,7 @@ function LoginPage() {
           loop={true}
         />
         <div className="w-11/12 -mt-6 lg:mt-0 mx-auto flex flex-col items-center justify-center order-2 lg:order-1">
-          <form className="mt-7 w-full" ref={formRef}>
+          <form className="mt-7 w-full" ref={formRef} onSubmit={handleRegister}>
             <div className="space-y-4">
               <div className="flex flex-col gap-1">
                 <label htmlFor="email" className="font-semibold text-lg">
