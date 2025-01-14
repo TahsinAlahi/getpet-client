@@ -1,45 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaSun, FaMoon } from "react-icons/fa";
 
 function LightDarkToggle() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() =>
+    document.body.classList.contains("dark")
+  );
 
-  function handleToggle() {
-    setIsDarkMode((prevState) => !prevState);
-    if (!isDarkMode) {
+  useEffect(() => {
+    if (isDarkMode) {
       document.body.classList.add("dark");
     } else {
       document.body.classList.remove("dark");
     }
+  }, [isDarkMode]);
+
+  function handleToggle() {
+    setIsDarkMode((prevState) => !prevState);
   }
 
   return (
     <div className="flex flex-col w-fit mx-auto items-center justify-center bg-transparent dark:bg-gray-800 rounded-full">
-      {/* Toggle Button */}
       <div className="relative">
-        <input
-          type="checkbox"
-          id="checkbox"
-          className="opacity-0 absolute"
-          checked={isDarkMode}
-          onChange={handleToggle}
-        />
-        <label
-          htmlFor="checkbox"
-          className="flex items-center justify-center aspect-square h-8 bg-gray-900 rounded-full p-1 cursor-pointer relative"
+        <div
+          className="flex items-center justify-center aspect-square h-9 bg-gray-900 rounded-full p-1 cursor-pointer relative"
+          onClick={handleToggle}
         >
           {isDarkMode ? (
-            <FaMoon
-              className={`text-yellow-500 ${!isDarkMode && "opacity-100"}`}
-            />
+            <FaMoon className="text-yellow-500 text-xl" />
           ) : (
-            <FaSun
-              className={`text-yellow-400 text-xl  ${
-                isDarkMode && "opacity-100"
-              }`}
-            />
+            <FaSun className="text-yellow-400 text-xl" />
           )}
-        </label>
+        </div>
       </div>
     </div>
   );
