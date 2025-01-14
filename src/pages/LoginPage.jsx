@@ -13,6 +13,22 @@ function LoginPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
 
+  async function handleLogin(e) {
+    e.preventDefault();
+
+    const formData = new FormData(formRef.current);
+    const { email, password } = Object.fromEntries(formData);
+    const res = await loginWithEmail(email, password);
+
+    if (res.status === "success")
+      navigate(state?.from === "/login" ? "/" : state?.from || "/");
+  }
+
+  async function onForgotPassword() {
+    const email = formRef.current.email.value;
+    await forgotPassword(email);
+  }
+
   return (
     <main className="bg-primary dark:bg-dark-primary min-h-screen max-w-screen-xl mx-auto text-black dark:text-white font-openSans py-10">
       <h1 className="text-3xl border-b-2 border-black dark:border-secondary  mx-auto text-center w-fit pb-1 mb-10 lg:mb-2 font-nunito">
@@ -26,7 +42,7 @@ function LoginPage() {
           loop={true}
         />
         <div className="w-11/12 -mt-12 md:-mt-20 lg:mt-0 mx-auto flex flex-col items-center justify-center order-2 lg:order-1">
-          <form className="mt-7 w-full" ref={formRef}>
+          <form className="mt-7 w-full" ref={formRef} onSubmit={handleLogin}>
             <div className="space-y-4">
               <div className="flex flex-col gap-1">
                 <label htmlFor="email" className="font-semibold text-lg">
@@ -65,7 +81,7 @@ function LoginPage() {
             </div>
             <button
               className="mt-3 text-sm font-semibold border-b-4 border-transparent hover:border-purple-900 transition-all duration-200"
-              // onClick={onForgotPassword}
+              onClick={onForgotPassword}
               type="button"
             >
               Forgot Password

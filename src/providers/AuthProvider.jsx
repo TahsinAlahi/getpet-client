@@ -94,6 +94,11 @@ function AuthProvider({ children }) {
   }
 
   async function forgotPassword(email) {
+    if (!email) {
+      toast.error("Please enter your email address.");
+      return;
+    }
+
     try {
       await sendPasswordResetEmail(auth, email);
 
@@ -114,6 +119,9 @@ function AuthProvider({ children }) {
         errorMessage = "No user found with this email.";
       } else if (error.code === "auth/network-request-failed") {
         errorMessage = "A network error occurred. Please try again later.";
+      } else if (error.code === "auth/too-many-requests") {
+        errorMessage =
+          "Too many password reset requests. Please try again later.";
       }
 
       toast.error(errorMessage);
