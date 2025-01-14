@@ -13,7 +13,7 @@ function NavBar() {
   }
 
   function activeClass({ isActive }) {
-    return `block md:py-1 py-2 px-3  rounded text-inherit font-semibold  ${
+    return `block md:py-1 py-2 px-3 border-b-2 border-transparent hover:border-black hover:dark:border-white text-inherit font-semibold  ${
       isActive ? "" : "md:bg-transparent"
     }`;
   }
@@ -66,7 +66,7 @@ function NavBar() {
         <div
           className={`${
             isMenuOpen ? "block" : "hidden"
-          } w-full lg:w-auto lg:flex lg:justify-end absolute lg:static top-full z-50 bg-nav dark:bg-nav-dark p-4 lg:border-0 border-nav right-0 left-0 lg:py-0 lg:px-0 lg:bg-transparent bg-secondary dark:bg-dark-secondary`}
+          } w-full lg:w-auto lg:flex lg:justify-end absolute lg:static top-full z-50 bg-nav dark:bg-nav-dark p-4 lg:border-0 border-nav right-0 left-0 lg:py-0 lg:px-0 lg:bg-transparent bg-secondary dark:bg-dark-secondary lg:flex-1 `}
         >
           <ul
             className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-white rounded-lg bg-nav-bg lg:flex-row md:space-x-2 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-nav-bg text-center"
@@ -110,7 +110,7 @@ function NavBar() {
               </li>
             )} */}
 
-            {/* <li className="lg:hidden block">
+            <li className="lg:hidden block">
               {user ? (
                 <button className="block md:py-1 py-2 px-3 mx-auto  rounded text-inherit font-semibold cursor-pointer">
                   Logout
@@ -123,19 +123,19 @@ function NavBar() {
                   Login
                 </Link>
               )}
-            </li> */}
+            </li>
 
-            {/* {!user && (
+            {!user && (
               <li className="lg:hidden block">
                 <NavLink to="/register" className={activeClass}>
                   Register
                 </NavLink>
               </li>
-            )} */}
+            )}
           </ul>
         </div>
 
-        {/* <div className="lg:flex items-center justify-center gap-2 ml-10 hidden">
+        <div className="lg:flex items-center justify-center gap-2 ml-3 hidden">
           {user ? (
             <>
               <button className="p-1 w-10 aspect-square rounded-full overflow-hidden  bg-gray-600 cursor-pointer">
@@ -154,22 +154,22 @@ function NavBar() {
               </button>
             </>
           ) : (
-            <div>
+            <>
               <Link
                 to="/login"
-                className="duration-100 transition-all  px-2 py-1 rounded font-semibold cursor-pointer"
+                className="duration-75 transition-all  px-2 py-1 font-semibold cursor-pointer border-b-2 border-transparent hover:border-black hover:dark:border-white"
               >
                 Login
               </Link>
               <Link
                 to="/register"
-                className="duration-100 transition-all  px-2 py-1 rounded font-semibold cursor-pointer"
+                className="duration-75 transition-all  px-2 py-1 font-semibold cursor-pointer border-b-2 border-transparent hover:border-black hover:dark:border-white"
               >
                 Register
               </Link>
-            </div>
+            </>
           )}
-        </div> */}
+        </div>
       </div>
     </nav>
   );
