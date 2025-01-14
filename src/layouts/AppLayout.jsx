@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 
 function AppLayout() {
   return (
-    <>
+    <div className="bg-primary dark:bg-dark-primary">
       <NavBar />
       <Outlet />
 
@@ -21,7 +21,7 @@ function AppLayout() {
         theme="light"
         transition:Bounce
       />
-    </>
+    </div>
   );
 }
 
