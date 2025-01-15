@@ -1,9 +1,7 @@
-import React from "react";
-
 function AboutUs() {
   return (
-    <section className="max-w-screen-md lg:mx-auto mx-4 my-16 text-center font-openSans space-y-2">
-      <h1 className="text-3xl border-b-2 border-black dark:border-secondary mx-auto text-center w-fit pb-1 mb-10 font-nunito text-black dark:text-white">
+    <section className="max-w-screen-md lg:mx-auto mx-4 my-16 text-center font-openSans space-y-2  text-black dark:text-white md:px-10 lg:px-0">
+      <h1 className="text-3xl border-b-2 border-black dark:border-secondary mx-auto text-center w-fit pb-1 mb-10 font-nunito">
         About Us
       </h1>
       <h2 className="text-xl">
