@@ -3,7 +3,7 @@ import React from "react";
 function CategoryCard({ name, imageUrl }) {
   return (
     <div
-      className="bg-cover bg-center bg-no-repeat h-[200px] text-white text-2xl font-bold font-nunito cursor-pointer"
+      className="bg-cover rounded-lg overflow-hidden bg-center bg-no-repeat h-[200px] text-white text-2xl font-bold font-nunito cursor-pointer"
       style={{
         backgroundImage: `url(${imageUrl})`,
       }}
