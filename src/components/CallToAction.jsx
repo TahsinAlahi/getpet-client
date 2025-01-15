@@ -37,7 +37,7 @@ function CallToAction() {
   return (
     <section>
       <h1 className="text-3xl border-b-2 border-black dark:border-secondary mx-auto text-center w-fit pb-1 mb-10 font-nunito text-black dark:text-white">
-        Categories
+        Come Forward
       </h1>
 
       <Swiper
