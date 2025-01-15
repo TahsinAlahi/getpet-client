@@ -9,8 +9,8 @@ function AboutUs() {
         pets find their forever homes!
       </h2>
       <p className="text-lg">
-        <span className="font-bold font-satisfy">GetPet</span> was created with
-        a vision to make pet adoption simple, accessible, and impactful. Our
+        <span className="font-bold font-coiny">GetPet</span> was created with a
+        vision to make pet adoption simple, accessible, and impactful. Our
         platform bridges the gap between animal shelters and compassionate
         individuals, providing a seamless way to find and adopt pets in need of
         loving homes.
@@ -19,7 +19,7 @@ function AboutUs() {
         Discover pets based on their profiles, learn about their unique traits,
         and connect directly with shelters to begin your adoption journey.
         Whether you’re looking for a playful companion, a loyal protector, or a
-        gentle soul, <span className="font-bold font-satisfy">GetPet</span> is
+        gentle soul, <span className="font-bold font-coiny">GetPet</span> is
         here to guide you.
       </p>
       <p className="text-lg">

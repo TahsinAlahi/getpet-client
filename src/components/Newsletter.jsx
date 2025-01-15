@@ -8,7 +8,7 @@ function Newsletter() {
       <p className="text-lg">
         Subscribe to our newsletter and be the first to know about adoption
         events, new furry friends, and exciting updates from{" "}
-        <span className="font-bold">GetPet</span>.
+        <span className="font-bold font-coiny">GetPet</span>.
       </p>
       <form className="mt-4 flex flex-col sm:flex-row gap-4">
         <input

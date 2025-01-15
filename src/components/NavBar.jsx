@@ -25,11 +25,13 @@ function NavBar() {
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img
-            src={logoImg}
-            className="h-10 scale-150 aspect-square dark:invert"
-            alt="EarthBound"
-          />
+          <div className="h-10 aspect-square overflow-hidden bg-primary rounded-full flex items-center justify-center">
+            <img
+              src={logoImg}
+              className="h-full w-full object-cover object-center scale-150 "
+              alt="GetPet"
+            />
+          </div>
           <span className="self-center text-3xl font-semibold whitespace-nowrap font-coiny">
             GetPet
           </span>
