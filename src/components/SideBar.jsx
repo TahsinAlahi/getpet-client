@@ -14,9 +14,9 @@ function SideBar() {
 
   return (
     <>
-      <div className="lg:hidden">
+      <aside className="lg:hidden">
         <button
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 absolute top-2"
+          className="text-dark-primary border border-dark-primary rounded-tl-none rounded-bl-none dark:text-white bg-secondary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 mb-2 dark:bg-blue-600 focus:outline-none dark:focus:ring-blue-800 absolute top-2 z-30"
           type="button"
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -37,12 +37,12 @@ function SideBar() {
           <UserDashBoard onClick={onSelect} />
           <AdminDashBoard onClick={onSelect} />
         </motion.div>
-      </div>
+      </aside>
 
-      <div className="absolute hidden lg:block top-0 bottom-0 bg-secondary dark:bg-dark-secondary border-2 border-l-0 border-black dark:border-white py-5 px-4">
+      <aside className="hidden lg:block top-0 bottom-0 bg-secondary dark:bg-dark-secondary border-2 border-l-0 border-black dark:border-white py-5 px-4">
         <UserDashBoard />
         <AdminDashBoard />
-      </div>
+      </aside>
     </>
   );
 }

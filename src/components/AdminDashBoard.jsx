@@ -8,7 +8,7 @@ const adminMenuItems = [
 
 function AdminDashBoard({ onClick }) {
   return (
-    <div className="w-72 text-black dark:text-white mt-4">
+    <div className="w-64 text-black dark:text-white mt-4">
       <h1 className="text-center font-nunito text-lg font-bold mb-1">
         Admin DashBoard
       </h1>

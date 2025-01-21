@@ -11,7 +11,7 @@ const menuItems = [
 
 function UserDashBoard({ onClick }) {
   return (
-    <div className="w-72">
+    <div className="w-64">
       <h1 className="text-center font-bold text-lg font-nunito mb-2">
         Dashboard
       </h1>
