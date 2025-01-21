@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
+import { useAuth } from "../../providers/AuthProvider";
 
 const petCategories = [
   { value: "dog", label: "Dog" },
@@ -14,6 +15,7 @@ const petCategories = [
 function AddPet() {
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
   const {
     register,
@@ -29,6 +31,8 @@ function AddPet() {
       const petData = {
         ...data,
         petAge: Number(data.petAge),
+        advertiserEmail: user.email,
+        advertiserName: user.displayName,
       };
 
       console.log(petData);
