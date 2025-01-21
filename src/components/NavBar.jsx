@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router";
 import logoImg from "../assets/logo.png";
 import { useAuth } from "../providers/AuthProvider";
 import LightDarkToggle from "./LightDarkToggle";
+import ProfileImage from "./ProfileImage";
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -37,10 +38,11 @@ function NavBar() {
           </span>
         </Link>
 
-        <div className="flex-1 flex items-center justify-end lg:hidden mr-3">
+        <div className="flex-1 flex gap-4 items-center justify-end lg:hidden mr-3">
           <div>
             <LightDarkToggle />
           </div>
+          <ProfileImage />
         </div>
         <button
           onClick={toggleMenu}
@@ -139,22 +141,7 @@ function NavBar() {
 
         <div className="lg:flex items-center justify-center gap-2 ml-3 hidden">
           {user ? (
-            <>
-              <button className="p-1 w-10 aspect-square rounded-full overflow-hidden  bg-gray-600 cursor-pointer">
-                <img
-                  src={user?.photoURL}
-                  alt={user?.name}
-                  className="w-full h-full object-cover object-center"
-                />
-              </button>
-
-              <button
-                className="duration-100 transition-all  px-2 py-1 rounded font-semibold cursor-pointer"
-                onClick={logout}
-              >
-                Logout
-              </button>
-            </>
+            <ProfileImage />
           ) : (
             <>
               <Link

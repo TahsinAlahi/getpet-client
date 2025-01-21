@@ -1,6 +1,6 @@
 function Newsletter() {
   return (
-    <div className="max-w-md mx-auto text-center space-y-2 font-poppins text-black dark:text-white font-openSans">
+    <div className="max-w-md mx-auto text-center space-y-2 font-poppins text-black dark:text-white font-openSans px-5 md:px-0">
       <h1 className="text-3xl border-b-2 border-black dark:border-secondary mx-auto text-center w-fit pb-1 mb-8 font-nunito">
         Newsletters
       </h1>
