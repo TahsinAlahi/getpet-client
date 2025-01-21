@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../providers/AuthProvider";
 
 const menuItems = [
   { title: "Add pet", link: "add-pet" },
@@ -12,12 +11,17 @@ const menuItems = [
 
 function UserDashBoard() {
   return (
-    <div className="h-full w-72">
+    <div className="w-72">
+      <h1 className="text-center font-bold text-lg font-nunito mb-2">
+        Dashboard
+      </h1>
       <ul className="text-center divide-y divide-black">
         {menuItems.map((item) => (
-          <Link key={item.link} className="py-2 block" to={item.link}>
-            {item.title}
-          </Link>
+          <li key={item.link}>
+            <Link className="py-2 block" to={item.link}>
+              {item.title}
+            </Link>
+          </li>
         ))}
       </ul>
     </div>

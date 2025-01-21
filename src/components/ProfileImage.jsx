@@ -25,7 +25,7 @@ function ProfileImage() {
         } absolute top-12 right-full translate-x-1/2 rounded-lg shadow dark:bg-dark-primary bg-primary border-dark-primary dark:border-primary border-2`}
       >
         <ul className="text-base text-gray-700 dark:text-gray-200">
-          <li>
+          <li onClick={() => setIsOpen(false)}>
             <Link
               to="/dashboard"
               className="block px-4 w-full py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white rounded-md"
@@ -34,7 +34,7 @@ function ProfileImage() {
             </Link>
           </li>
 
-          <li>
+          <li onClick={() => setIsOpen(false)}>
             <button
               className="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white rounded-md"
               onClick={logout}
