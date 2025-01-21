@@ -9,7 +9,7 @@ const menuItems = [
   { title: "My Donations", link: "my-donations" },
 ];
 
-function UserDashBoard() {
+function UserDashBoard({ onClick }) {
   return (
     <div className="w-72">
       <h1 className="text-center font-bold text-lg font-nunito mb-2">
@@ -17,7 +17,7 @@ function UserDashBoard() {
       </h1>
       <ul className="text-center divide-y divide-black">
         {menuItems.map((item) => (
-          <li key={item.link}>
+          <li key={item.link} onClick={onClick}>
             <Link className="py-2 block" to={item.link}>
               {item.title}
             </Link>

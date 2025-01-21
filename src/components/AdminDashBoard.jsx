@@ -6,7 +6,7 @@ const adminMenuItems = [
   { title: "All donations", link: "all-donations" },
 ];
 
-function AdminDashBoard() {
+function AdminDashBoard({ onClick }) {
   return (
     <div className="w-72 text-black dark:text-white mt-4">
       <h1 className="text-center font-nunito text-lg font-bold mb-1">
@@ -14,7 +14,7 @@ function AdminDashBoard() {
       </h1>
       <ul className="text-center divide-y divide-black">
         {adminMenuItems.map((item) => (
-          <li key={item.link}>
+          <li key={item.link} onClick={onClick}>
             <Link className="py-2 block" to={item.link}>
               {item.title}
             </Link>
