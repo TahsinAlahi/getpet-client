@@ -215,6 +215,7 @@ function AuthProvider({ children }) {
     forgotPassword,
     loginWithGoogle,
     logout,
+    isAuthLoading,
     user,
   };
   return <authContext.Provider value={value}>{children}</authContext.Provider>;
