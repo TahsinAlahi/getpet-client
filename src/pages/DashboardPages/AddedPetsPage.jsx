@@ -1,18 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../../providers/AuthProvider";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+// import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import PetTable from "../../components/PetTable";
 
 function AddedPetsPage() {
-  // TODO: change it to secure later
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
   async function getAddedPets() {
     try {
-      // const res = await axiosPublic.get(`/pets/added-pets/${user.email}`);
-      const res = await axiosPublic.get(`/admins/all-pets`);
-      console.log(res.data);
+      const res = await axiosSecure.get(`/pets/added-pets/${user.email}`);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -46,13 +44,18 @@ function AddedPetsPage() {
           <h1 className="text-4xl font-semibold font-nunito border-b-4 dark:border-white border-dark-primary text-center mb-10">
             Added Pets
           </h1>
-
-          <PetTable
-            data={addedPets}
-            onDelete={handleDelete}
-            onAdopt={handleAdopt}
-            onEdit={handleEdit}
-          />
+          {addedPets?.length === 0 ? (
+            <h1 className="text-2xl font-semibold font-nunito">
+              No Pets Added
+            </h1>
+          ) : (
+            <PetTable
+              data={addedPets}
+              onDelete={handleDelete}
+              onAdopt={handleAdopt}
+              onEdit={handleEdit}
+            />
+          )}
         </div>
       </div>
     </main>

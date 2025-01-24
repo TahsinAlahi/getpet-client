@@ -32,7 +32,7 @@ export default function PetTable({ data = [], onDelete, onAdopt, onEdit }) {
       },
       {
         accessorKey: "petName",
-        header: "Pet Name",
+        header: "Name",
         cell: (info) => (
           <p className="font-semibold text-gray-800">
             {info.row.original.petName}
@@ -121,7 +121,7 @@ export default function PetTable({ data = [], onDelete, onAdopt, onEdit }) {
 
   return (
     <div className="w-full mx-auto flex-1">
-      <div className="overflow-x-auto w-full">
+      <div className="overflow-x-auto w-full max-w-screen-lg mx-auto">
         <div className="rounded-lg border border-gray-300 shadow-lg overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-200 rounded-lg">
             <thead className="bg-gray-100 text-gray-700">
@@ -134,9 +134,9 @@ export default function PetTable({ data = [], onDelete, onAdopt, onEdit }) {
                     <th
                       key={header.id}
                       onClick={header.column.getToggleSortingHandler()}
-                      className="px-6 py-4 font-medium cursor-pointer hover:bg-gray-200 transition"
+                      className="px-4 py-4 w-full font-medium cursor-pointer hover:bg-gray-200 transition"
                     >
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-center gap-2">
                         {flexRender(
                           header.column.columnDef.header,
                           header.getContext()
@@ -174,14 +174,14 @@ export default function PetTable({ data = [], onDelete, onAdopt, onEdit }) {
           <button
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
-            className="px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-lg hover:bg-gray-600 disabled:opacity-50"
+            className="px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Previous
           </button>
           <button
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
-            className="px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-lg hover:bg-gray-600 disabled:opacity-50"
+            className="px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Next
           </button>

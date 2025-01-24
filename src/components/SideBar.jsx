@@ -39,7 +39,7 @@ function SideBar() {
         </motion.div>
       </aside>
 
-      <aside className="hidden lg:block top-0 bottom-0 bg-secondary dark:bg-dark-secondary border-2 border-l-0 border-black dark:border-white py-5 px-4">
+      <aside className="hidden lg:block bg-secondary dark:bg-dark-secondary border-2 border-l-0 border-black dark:border-white py-5 px-4">
         <UserDashBoard />
         <AdminDashBoard />
       </aside>
