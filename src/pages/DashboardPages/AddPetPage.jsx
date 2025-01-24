@@ -49,7 +49,7 @@ function AddPet() {
     <main className="min-h-screen w-full max-w-screen-xl mx-auto flex items-center justify-center py-5">
       <div className="w-full md:mx-4 bg-secondary dark:bg-dark-secondary backdrop-filter backdrop-blur-sm mx-3  py-5">
         <div className="flex flex-col items-center justify-center w-5/6 lg:w-1/2 mx-auto">
-          <h1 className="text-4xl font-semibold font-cinzel border-b-4 dark:border-white border-dark-primary">
+          <h1 className="text-4xl font-semibold font-nunito border-b-4 dark:border-white border-dark-primary">
             Add Your Pet
           </h1>
           <form onSubmit={handleSubmit(onSubmit)} className="mt-7 w-full">

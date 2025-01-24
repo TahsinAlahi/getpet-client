@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
 import AddPetPage from "./pages/DashboardPages/AddPetPage";
+import AddedPetsPage from "./pages/DashboardPages/AddedPetsPage";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <DashboardPage />,
-        children: [{ path: "add-pet", element: <AddPetPage /> }],
+        children: [
+          { path: "add-pet", element: <AddPetPage /> },
+          { path: "added-pets", element: <AddedPetsPage /> },
+        ],
       },
     ],
   },
