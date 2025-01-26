@@ -5,6 +5,7 @@ import { IoTimeOutline } from "react-icons/io5";
 import { MdDateRange } from "react-icons/md";
 import { BiDonateHeart } from "react-icons/bi";
 import { GrStatusGood } from "react-icons/gr";
+import RelatedCampaignCard from "../components/RelatedCampaignCard";
 
 function CampaignDetailsPage() {
   const { id } = useParams();
@@ -23,8 +24,8 @@ function CampaignDetailsPage() {
   const { campaign: campaignData, relatedCampaigns } = data || {};
 
   return (
-    <div className="bg-[#fdf1ec] dark:bg-dark-primary flex justify-center items-center min-h-[0.5svh] py-10 px-5">
-      <div className="rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-2 place-content-center max-w-screen-md mx-auto overflow-hidden font-openSans">
+    <div className="bg-[#fdf1ec] dark:bg-dark-primary flex justify-center items-center flex-col min-h-[0.5svh] py-10 px-5">
+      <section className="rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-2 place-content-center max-w-screen-md mx-auto overflow-hidden font-openSans">
         <div className="h-full">
           <img
             src={campaignData?.petImage}
@@ -60,15 +61,23 @@ function CampaignDetailsPage() {
             </p>
           </div>
           <div className="mt-4">
-            <button
-              className="w-[176px] h-[50px] rounded-full bg-green-800 text-white uppercase font-raleway text-[14px] tracking-[0.2em] font-medium outline-none hover:bg-green-900"
-              onClick={() => setIsModalOpen(true)}
-            >
+            <button className="w-[176px] h-[50px] rounded-full bg-green-800 text-white uppercase font-raleway text-[14px] tracking-[0.2em] font-medium outline-none hover:bg-green-900">
               Donate
             </button>
           </div>
         </div>
-      </div>
+      </section>
+
+      <section className="bg-[#fdf1ec] w-full md:w-4/5 mx-auto dark:bg-dark-primary flex justify-center items-center flex-col min-h-[0.5svh] py-10 px-5 mt-5">
+        <h1 className="text-xl mx-auto text-center w-fit pb-1 mb-5 font-nunito font-bold">
+          Check these Campaigns
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 w-full px-5 md:px-0  mx-auto">
+          {relatedCampaigns?.map((campaign) => (
+            <RelatedCampaignCard key={campaign._id} campaign={campaign} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
