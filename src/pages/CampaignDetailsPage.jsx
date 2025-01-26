@@ -6,6 +6,10 @@ import { MdDateRange } from "react-icons/md";
 import { BiDonateHeart } from "react-icons/bi";
 import { GrStatusGood } from "react-icons/gr";
 import RelatedCampaignCard from "../components/RelatedCampaignCard";
+import CampaignModal from "../components/CampaignModal";
+import { useState } from "react";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 function CampaignDetailsPage() {
   const { id } = useParams();
@@ -20,6 +24,8 @@ function CampaignDetailsPage() {
     staleTime: 2 * 60 * 1000,
     cacheTime: 2 * 60 * 1000,
   });
+  const [isModalOpen, setIsModalOpen] = useState(true);
+  const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
   const { campaign: campaignData, relatedCampaigns } = data || {};
 
@@ -61,11 +67,21 @@ function CampaignDetailsPage() {
             </p>
           </div>
           <div className="mt-4">
-            <button className="w-[176px] h-[50px] rounded-full bg-green-800 text-white uppercase font-raleway text-[14px] tracking-[0.2em] font-medium outline-none hover:bg-green-900">
+            <button
+              className="w-[176px] h-[50px] rounded-full bg-green-800 text-white uppercase font-raleway text-[14px] tracking-[0.2em] font-medium outline-none hover:bg-green-900"
+              onClick={() => setIsModalOpen(true)}
+            >
               Donate
             </button>
           </div>
         </div>
+        <Elements stripe={stripePromise}>
+          <CampaignModal
+            campaignData={campaignData}
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+          />
+        </Elements>
       </section>
 
       <section className="bg-[#fdf1ec] w-full md:w-4/5 mx-auto dark:bg-dark-primary flex justify-center items-center flex-col min-h-[0.5svh] py-10 px-5 mt-5">
