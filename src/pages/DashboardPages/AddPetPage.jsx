@@ -21,12 +21,10 @@ function AddPet() {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
-    watch,
     control,
   } = useForm();
 
-  const onSubmit = async (data) => {
+  async function onSubmit(data) {
     try {
       const petData = {
         ...data,
@@ -39,7 +37,7 @@ function AddPet() {
     } catch (error) {
       console.error("Error adding pet:", error);
     }
-  };
+  }
 
   function handleImageUpload() {
     console.log("uploaded");
