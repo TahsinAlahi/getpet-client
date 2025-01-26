@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useAuth } from "../providers/AuthProvider";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import CampaignTable from "../components/CampaignTable";
 
 function MyCampaignPage() {
   const axiosSecure = useAxiosSecure();
@@ -22,15 +23,15 @@ function MyCampaignPage() {
     console.log(id);
   }
 
-  // async function handlePause(id, status) {
-  //   try {
-  //     const newStatus = status === "paused" ? "active" : "paused";
-  //     await axiosSecure.put(`/donations/${id}/pause`, { status: newStatus });
-  //     // Optionally trigger refetch after update to reflect changes
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+  async function handlePause(id, status) {
+    try {
+      // const newStatus = status === "paused" ? "active" : "paused";
+      // await axiosSecure.put(`/donations/${id}/pause`, { status: newStatus });
+      console.log(id, status);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const { data: donations, isLoading } = useQuery({
     queryKey: ["userDonations"],
@@ -53,12 +54,11 @@ function MyCampaignPage() {
               No Donations Requested
             </h1>
           ) : (
-            <></>
-            // <CampaignTable
-            //   data={donations}
-            //   onEdit={handleEdit}
-            //   onPause={handlePause}
-            // />
+            <CampaignTable
+              data={donations}
+              onEdit={handleEdit}
+              onPause={handlePause}
+            />
           )}
         </div>
       </div>
