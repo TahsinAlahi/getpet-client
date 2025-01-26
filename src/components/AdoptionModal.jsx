@@ -3,12 +3,14 @@ import { useForm } from "react-hook-form";
 import { MdCancel } from "react-icons/md";
 import { useAuth } from "../providers/AuthProvider";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useNavigate } from "react-router-dom";
 
 ReactModal.setAppElement("#root");
 
 function AdoptionModal({ petData, isModalOpen, setIsModalOpen }) {
   const { user } = useAuth();
   const AxiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -16,7 +18,7 @@ function AdoptionModal({ petData, isModalOpen, setIsModalOpen }) {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  async function onSubmit(data) {
     console.log("Form submitted:", data);
     const requestData = {
       petId: petData?._id,
@@ -25,7 +27,15 @@ function AdoptionModal({ petData, isModalOpen, setIsModalOpen }) {
       userPhone: data.phoneNumber,
       userAddress: data.address,
     };
-  };
+
+    try {
+      await AxiosSecure.post("/requests/create-request", requestData);
+      setIsModalOpen(false);
+      navigate("/pet-listing");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <ReactModal
