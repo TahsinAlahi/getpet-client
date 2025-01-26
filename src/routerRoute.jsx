@@ -11,6 +11,7 @@ import PetDetailPage from "./pages/PetDetailPage";
 import CampaignsPage from "./pages/CampaignsPage";
 import CampaignDetailsPage from "./pages/CampaignDetailsPage";
 import CreateCampaignPage from "./pages/CreateCampaignPage";
+import MyCampaignPage from "./pages/MyCampaignPage";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
           { path: "add-pet", element: <AddPetPage /> },
           { path: "added-pets", element: <AddedPetsPage /> },
           { path: "create-donation-campaign", element: <CreateCampaignPage /> },
+          { path: "my-donation-campaigns", element: <MyCampaignPage /> },
         ],
       },
     ],
