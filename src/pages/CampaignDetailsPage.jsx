@@ -24,7 +24,8 @@ function CampaignDetailsPage() {
     staleTime: 2 * 60 * 1000,
     cacheTime: 2 * 60 * 1000,
   });
-  const [isModalOpen, setIsModalOpen] = useState(true);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
   const { campaign: campaignData, relatedCampaigns } = data || {};

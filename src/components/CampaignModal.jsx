@@ -10,7 +10,7 @@ ReactModal.setAppElement("#root");
 
 function CampaignModal({ campaignData, isModalOpen, setIsModalOpen }) {
   const { user } = useAuth();
-  const AxiosSecure = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
@@ -25,28 +25,47 @@ function CampaignModal({ campaignData, isModalOpen, setIsModalOpen }) {
     if (!stripe || !elements) return;
 
     const cardElement = elements.getElement(CardElement);
-    const { token, error } = await stripe.createToken(cardElement);
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-
-    const requestData = {
-      campaignId: campaignData?._id,
-      userName: user?.displayName,
-      userEmail: user?.email,
-      donationAmount: data.donationAmount,
-      token: token.id,
-    };
+    if (!cardElement) return;
 
     try {
-      // await AxiosSecure.post("/donations/create-donation", requestData);
-      // setIsModalOpen(false);
-      // navigate("/campaigns");
-      console.log(requestData);
+      const { clientSecret } = await axiosSecure
+        .post("/donations/create-payment-intent", {
+          amount: Number(data?.donationAmount),
+        })
+        .then((res) => res.data);
+
+      console.log(clientSecret);
+
+      const { error: confirmError, paymentIntent } =
+        await stripe.confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: cardElement,
+            billing_details: {
+              email: user?.email || "anonymous",
+              name: user?.displayName || "anonymous",
+            },
+          },
+        });
+
+      if (confirmError) throw new Error(confirmError.message);
+
+      const donationData = {
+        donatorName: user?.displayName || "anonymous",
+        donatorEmail: user?.email || "anonymous",
+        donationAmount: Number(data?.donationAmount),
+        campaignId: campaignData?._id,
+        transitionId: paymentIntent.id,
+      };
+
+      if (paymentIntent?.status === "succeeded") {
+        await axiosSecure.post("/donations/create-donation", donationData);
+      }
+
+      setIsModalOpen(false);
+      navigate("/donation-campaigns");
+      console.log(donationData);
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
     }
   }
 
