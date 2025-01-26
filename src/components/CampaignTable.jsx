@@ -8,9 +8,12 @@ import {
 import { useMemo, useState } from "react";
 import { FaPause, FaPlay, FaPencilAlt } from "react-icons/fa";
 import { FaEye } from "react-icons/fa6";
+import DonatorsModal from "./DonatorsModal";
 
 export default function CampaignTable({ data = [], onEdit, onPause }) {
   const [sorting, setSorting] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCampaign, setSelectedCampaign] = useState(null);
 
   const columns = useMemo(
     () => [
@@ -72,7 +75,10 @@ export default function CampaignTable({ data = [], onEdit, onPause }) {
         cell: (info) => (
           <div className="flex gap-2 items-center justify-center">
             <button
-              onClick={() => onEdit(info.row.original._id)}
+              onClick={() => {
+                setIsModalOpen(true);
+                setSelectedCampaign(info.row.original);
+              }}
               className="p-2 rounded-md bg-green-500 text-white hover:bg-green-600 transition"
               title="Donators"
             >
@@ -193,6 +199,11 @@ export default function CampaignTable({ data = [], onEdit, onPause }) {
           {table.getPageCount()}
         </span>
       </div>
+      <DonatorsModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        campaignData={selectedCampaign}
+      />
     </div>
   );
 }

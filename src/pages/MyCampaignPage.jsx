@@ -41,7 +41,6 @@ function MyCampaignPage() {
     refetchOnWindowFocus: false,
   });
 
-  console.log(donations);
   return (
     <main className="text-black dark:text-white font-openSans min-h-svh w-full mx-auto flex-1">
       <div className="bg-secondary dark:bg-dark-secondary h-full mx-2">
