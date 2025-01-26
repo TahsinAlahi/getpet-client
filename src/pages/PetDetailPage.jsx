@@ -3,10 +3,13 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useParams } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoTimeOutline } from "react-icons/io5";
+import { useState } from "react";
+import AdoptionModal from "../components/AdoptionModal";
 
 function PetDetailsPage() {
   const { id } = useParams();
   const AxiosSecure = useAxiosSecure();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: petData, isLoading } = useQuery({
     queryKey: ["pet", id],
     queryFn: async () => {
@@ -47,12 +50,20 @@ function PetDetailsPage() {
             </p>
           </div>
           <div className="mt-4">
-            <button className="w-[176px] h-[50px] rounded-full bg-blue-800 text-white uppercase font-raleway text-[14px] tracking-[0.2em] font-medium outline-none hover:bg-blue-900">
+            <button
+              className="w-[176px] h-[50px] rounded-full bg-blue-800 text-white uppercase font-raleway text-[14px] tracking-[0.2em] font-medium outline-none hover:bg-blue-900"
+              onClick={() => setIsModalOpen(true)}
+            >
               Adopt
             </button>
           </div>
         </div>
       </div>
+      <AdoptionModal
+        petData={petData}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </div>
   );
 }
