@@ -13,6 +13,7 @@ import CampaignDetailsPage from "./pages/CampaignDetailsPage";
 import CreateCampaignPage from "./pages/CreateCampaignPage";
 import MyCampaignPage from "./pages/MyCampaignPage";
 import EditCampaignPage from "./pages/EditCampaignPage";
+import DonationsPage from "./pages/DonationsPage";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
           { path: "edit-campaign/:id", element: <EditCampaignPage /> },
           { path: "create-donation-campaign", element: <CreateCampaignPage /> },
           { path: "my-donation-campaigns", element: <MyCampaignPage /> },
+          {
+            path: "my-donations",
+            element: <DonationsPage />,
+          },
         ],
       },
     ],
