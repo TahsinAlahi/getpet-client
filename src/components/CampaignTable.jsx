@@ -9,11 +9,13 @@ import { useMemo, useState } from "react";
 import { FaPause, FaPlay, FaPencilAlt } from "react-icons/fa";
 import { FaEye } from "react-icons/fa6";
 import DonatorsModal from "./DonatorsModal";
+import { useNavigate } from "react-router-dom";
 
 export default function CampaignTable({ data = [], onEdit, onPause }) {
   const [sorting, setSorting] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCampaign, setSelectedCampaign] = useState(null);
+  const navigate = useNavigate();
 
   const columns = useMemo(
     () => [
@@ -85,7 +87,9 @@ export default function CampaignTable({ data = [], onEdit, onPause }) {
               <FaEye size={18} />
             </button>
             <button
-              onClick={() => onEdit(info.row.original._id)}
+              onClick={() =>
+                navigate(`/dashboard/edit-campaign/${info.row.original._id}`)
+              }
               className="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition"
               title="Edit"
             >
