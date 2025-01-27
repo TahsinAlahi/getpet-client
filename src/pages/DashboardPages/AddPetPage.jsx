@@ -2,6 +2,12 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import { useAuth } from "../../providers/AuthProvider";
+import axios from "axios";
+import { toast } from "react-toastify";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useNavigate } from "react-router-dom";
+
+const IMAGE_BB_API_KEY = import.meta.env.VITE_IMAGE_BB_API_KEY;
 
 const petCategories = [
   { value: "dog", label: "Dog" },
@@ -16,6 +22,8 @@ function AddPet() {
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -31,16 +39,40 @@ function AddPet() {
         petAge: Number(data.petAge),
         advertiserEmail: user.email,
         advertiserName: user.displayName,
+        petCategory: data?.petCategory?.value,
+        petImage: imageUrl,
       };
 
       console.log(petData);
+      await axiosSecure.post("/pets/add-pet", petData);
+      toast.success("Pet added successfully!");
+      navigate("/dashboard/added-pets");
     } catch (error) {
-      console.error("Error adding pet:", error);
+      console.error(error?.message);
+      toast.error("Failed to add pet. Try again later.");
     }
   }
 
-  function handleImageUpload() {
-    console.log("uploaded");
+  async function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${IMAGE_BB_API_KEY}`,
+        formData
+      );
+      setImageUrl(response.data.data.url);
+    } catch (error) {
+      toast.error("Failed to upload image.");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -104,9 +136,7 @@ function AddPet() {
                       {...field}
                       options={petCategories}
                       onChange={(selectedOption) =>
-                        field.onChange(
-                          selectedOption ? selectedOption.value : ""
-                        )
+                        field.onChange(selectedOption ? selectedOption : "")
                       }
                       className="text-black border border-gray-400 shadow-md"
                       placeholder="Select pet category"
@@ -198,11 +228,7 @@ function AddPet() {
                   required
                 />
                 {imageUrl && (
-                  <img
-                    src={imageUrl}
-                    alt="Pet"
-                    className="mt-2 max-w-full h-auto"
-                  />
+                  <img src={imageUrl} alt="Pet" className="mt-2 w-44" />
                 )}
               </div>
             </div>
