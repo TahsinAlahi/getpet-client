@@ -2,14 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../../providers/AuthProvider";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import PetTable from "../../components/PetTable";
+import RequestTable from "../../components/RequestTable";
 
-function AddedPetsPage() {
+function RequestPage() {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
-  async function getAddedPets() {
+  async function getUsersRequest() {
     try {
-      const res = await axiosSecure.get(`/pets/added-pets/${user.email}`);
+      const res = await axiosSecure.get(
+        `requests/requests-users-pets/${user.email}`
+      );
       return res.data;
     } catch (error) {
       console.log(error);
@@ -17,12 +20,12 @@ function AddedPetsPage() {
   }
 
   const {
-    data: allPets,
+    data: usersPetsRequests,
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["allPets"],
-    queryFn: getAddedPets,
+    queryKey: ["usersPetsRequests"],
+    queryFn: getUsersRequest,
     staleTime: 5 * 60 * 1000,
     cacheTime: 5 * 60 * 1000,
     refetchOnWindowFocus: true,
@@ -35,12 +38,12 @@ function AddedPetsPage() {
           <h1 className="text-4xl font-semibold font-nunito border-b-4 dark:border-white border-dark-primary text-center mb-10">
             Added Pets
           </h1>
-          {allPets?.length === 0 ? (
+          {usersPetsRequests?.length === 0 ? (
             <h1 className="text-2xl font-semibold font-nunito">
               No Pets Added
             </h1>
           ) : (
-            <PetTable data={allPets} refetch={refetch} />
+            <RequestTable data={usersPetsRequests} refetch={refetch} />
           )}
         </div>
       </div>
@@ -48,4 +51,4 @@ function AddedPetsPage() {
   );
 }
 
-export default AddedPetsPage;
+export default RequestPage;

@@ -2,40 +2,28 @@ import {
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
-  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
-import { FaHeart, FaTrash } from "react-icons/fa";
-import { IoPencil } from "react-icons/io5";
-import useAxiosSecure from "../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
-export default function PetTable({ data = [], refetch }) {
+export default function RequestTable({ data = [], refetch }) {
   const [sorting, setSorting] = useState([]);
   const axiosSecure = useAxiosSecure();
-  const navigate = useNavigate();
 
-  async function onDelete(id) {
+  async function handleDecision(id, decision) {
     try {
-      await axiosSecure.delete(`/pets/${id}`);
-      toast.success("Pet deleted successfully");
-      refetch();
-    } catch (error) {
-      console.log(error?.message);
-      toast.error("Failed to delete pet. Please try again later.");
-    }
-  }
-
-  async function onAdopt(id, isAdopted) {
-    try {
-      await axiosSecure.patch(`/pets/${id}`, { isAdopted: !isAdopted });
-      toast.success(`Pet ${isAdopted ? "unadopted" : "adopted"} successfully`);
+      await axiosSecure.patch(`/requests/delete-request/${id}`, {
+        isAccepted: decision,
+      });
+      toast.success("Request deleted successfully");
       refetch();
     } catch (error) {
       console.error(error?.message);
-      toast.error("Failed to adopt pet. Please try again later.");
+      toast.error(
+        "Failed to update the request status. Please try again later."
+      );
     }
   }
 
@@ -52,52 +40,45 @@ export default function PetTable({ data = [], refetch }) {
         cell: (info) => (
           <img
             src={info.getValue()}
-            alt={info.row.original.petName}
-            className="w-16 h-16 rounded-lg border border-gray-300 object-cover shadow-sm"
+            alt="Image"
+            className="w-16 h-16 rounded-lg border border-gray-300 object-cover shadow-sm flex items-center justify-center overflow-hidden flex-wrap"
           />
         ),
       },
       {
-        accessorKey: "petName",
+        accessorKey: "userName",
         header: "Name",
         cell: (info) => (
-          <p className="font-semibold text-gray-800">
-            {info.row.original.petName}
-          </p>
+          <p className="font-semibold text-gray-800">{info.getValue()}</p>
         ),
       },
       {
-        accessorKey: "petCategory",
-        header: "Category",
-        cell: (info) => (
-          <p className="text-sm text-gray-600">{info.getValue()}</p>
-        ),
+        accessorKey: "userEmail",
+        header: "Email",
+        cell: (info) => <p className="text-gray-600">{info.getValue()}</p>,
       },
       {
-        accessorKey: "petAge",
-        header: "Age",
-        cell: (info) => `${info.row.original.petAge} years`,
+        accessorKey: "userPhone",
+        header: "Phone",
+        cell: (info) => <p className="text-gray-600">{info.getValue()}</p>,
       },
       {
-        accessorKey: "petLocation",
+        accessorKey: "userAddress",
         header: "Location",
+        cell: (info) => <p className="text-gray-600">{info.getValue()}</p>,
       },
       {
-        accessorKey: "shortDescription",
-        header: "Description",
-      },
-      {
-        accessorKey: "isAdopted",
+        accessorKey: "isAccepted",
         header: "Status",
         cell: (info) => (
           <span
             className={`px-3 py-1 rounded-full text-xs font-medium ${
-              info.getValue()
+              info?.getValue()
                 ? "bg-green-200 text-green-800"
-                : "bg-yellow-200 text-yellow-800"
+                : "bg-red-200 text-red-800"
             }`}
           >
-            {info.getValue() ? "Adopted" : "Available"}
+            {info?.getValue() ? "Accepted" : "Rejected"}
           </span>
         ),
       },
@@ -105,35 +86,20 @@ export default function PetTable({ data = [], refetch }) {
         id: "actions",
         header: "Actions",
         cell: (info) => (
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center justify-center">
             <button
-              onClick={() =>
-                navigate(`/dashboard/edit-pet/${info.row.original._id}`)
-              }
-              className="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition"
-              title="Edit"
+              onClick={() => handleDecision(info.row.original._id, true)}
+              className="p-2 rounded-md bg-green-500 text-white hover:bg-green-600 transition"
+              title="Accept"
             >
-              <IoPencil size={18} />
+              Accept
             </button>
             <button
-              onClick={() => onDelete(info.row.original._id)}
+              onClick={() => handleDecision(info.row.original._id, false)}
               className="p-2 rounded-md bg-red-500 text-white hover:bg-red-600 transition"
-              title="Delete"
+              title="Reject"
             >
-              <FaTrash size={18} />
-            </button>
-            <button
-              onClick={() =>
-                onAdopt(info.row.original._id, info.row.original.isAdopted)
-              }
-              className={`p-2 rounded-md ${
-                info.row.original.isAdopted
-                  ? "bg-yellow-500 hover:bg-yellow-700"
-                  : "bg-green-500 hover:bg-green-600"
-              } text-white transition`}
-              title={info.row.original.isAdopted ? "Unadopt" : "Adopt"}
-            >
-              <FaHeart size={18} />
+              Reject
             </button>
           </div>
         ),
@@ -148,7 +114,6 @@ export default function PetTable({ data = [], refetch }) {
     state: { sorting },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
 
@@ -167,25 +132,20 @@ export default function PetTable({ data = [], refetch }) {
                     <th
                       key={header.id}
                       onClick={header.column.getToggleSortingHandler()}
-                      className="px-4 py-4 w-full font-medium cursor-pointer hover:bg-gray-200 transition"
+                      className="px-4 py-4 font-medium cursor-pointer hover:bg-gray-200 transition"
                     >
                       <div className="flex items-center justify-center gap-2">
                         {flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                        {header.column.getIsSorted() === "asc"
-                          ? "↑"
-                          : header.column.getIsSorted() === "desc"
-                          ? "↓"
-                          : null}
                       </div>
                     </th>
                   ))}
                 </tr>
               ))}
             </thead>
-            <tbody className="text-gray-800 divide-y divide-gray-200">
+            <tbody className="text-gray-800 divide-y divide-gray-200 text-center">
               {table.getRowModel().rows.map((row) => (
                 <tr key={row.id} className="hover:bg-gray-50 transition">
                   {row.getVisibleCells().map((cell) => (

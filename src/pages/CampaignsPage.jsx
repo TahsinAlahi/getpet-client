@@ -8,7 +8,6 @@ function CampaignsPage() {
     queryKey: ["campaigns"],
     queryFn: async () => {
       const res = await axiosPublic.get("/campaigns/all-campaigns");
-      console.log(res.data);
       return res.data;
     },
     staleTime: 5 * 60 * 1000,

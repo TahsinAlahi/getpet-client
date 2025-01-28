@@ -43,7 +43,6 @@ function AddPet() {
         petImage: imageUrl,
       };
 
-      console.log(petData);
       await axiosSecure.post("/pets/add-pet", petData);
       toast.success("Pet added successfully!");
       navigate("/dashboard/added-pets");

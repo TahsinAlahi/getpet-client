@@ -18,7 +18,6 @@ function CampaignDetailsPage() {
     queryKey: ["campaign", id],
     queryFn: async () => {
       const res = await AxiosSecure.get(`/campaigns/${id}`);
-      console.log(res.data);
       return res.data;
     },
     staleTime: 2 * 60 * 1000,

@@ -34,8 +34,6 @@ function CampaignModal({ campaignData, isModalOpen, setIsModalOpen }) {
         })
         .then((res) => res.data);
 
-      console.log(clientSecret);
-
       const { error: confirmError, paymentIntent } =
         await stripe.confirmCardPayment(clientSecret, {
           payment_method: {
@@ -63,7 +61,6 @@ function CampaignModal({ campaignData, isModalOpen, setIsModalOpen }) {
 
       setIsModalOpen(false);
       navigate("/donation-campaigns");
-      console.log(donationData);
     } catch (error) {
       console.error(error?.message);
     }

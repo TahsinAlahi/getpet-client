@@ -25,7 +25,6 @@ function EditCampaignPage() {
     async function fetchCampaignData() {
       try {
         const response = await axiosSecure.get(`/campaigns/${id}`);
-        console.log(response.data?.campaign);
         const campaign = response.data?.campaign;
         setValue("petName", campaign.petName);
         setValue("maxDonationAmount", campaign.maxDonationAmount);

@@ -19,7 +19,6 @@ function AdoptionModal({ petData, isModalOpen, setIsModalOpen }) {
   } = useForm();
 
   async function onSubmit(data) {
-    console.log("Form submitted:", data);
     const requestData = {
       petId: petData?._id,
       userName: user?.displayName,
@@ -28,7 +27,10 @@ function AdoptionModal({ petData, isModalOpen, setIsModalOpen }) {
       userAddress: data.address,
       petImage: petData?.petImage,
       petName: petData?.petName,
+      advertiserEmail: petData?.advertiserEmail,
     };
+
+    console.log(requestData);
 
     try {
       await AxiosSecure.post("/requests/create-request", requestData);
