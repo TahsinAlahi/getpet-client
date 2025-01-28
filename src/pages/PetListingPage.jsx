@@ -24,7 +24,7 @@ function PetListingPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:w-4/5 w-full px-5 md:px-0  mx-auto">
         {isLoading
-          ? Array.from({ length: 8 }).map((_, index) => (
+          ? Array.from({ length: 9 }).map((_, index) => (
               <PetListCard key={index} isLoading />
             ))
           : pets?.map((pet) => <PetListCard key={pet._id} pet={pet} />)}

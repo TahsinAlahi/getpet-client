@@ -21,9 +21,13 @@ function CampaignsPage() {
         Donation Campaigns
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:w-4/5 w-full px-5 md:px-0  mx-auto">
-        {campaigns?.map((campaign) => (
-          <CampaignCard key={campaign._id} campaign={campaign} />
-        ))}
+        {isLoading
+          ? Array.from({ length: 9 }).map((_, index) => (
+              <CampaignCard key={index} isLoading={true} />
+            ))
+          : campaigns?.map((campaign) => (
+              <CampaignCard key={campaign._id} campaign={campaign} />
+            ))}
       </div>
     </main>
   );

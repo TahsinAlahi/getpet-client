@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 
 function PetListCard({ pet = null, isLoading = false }) {
   return (
@@ -32,10 +31,12 @@ function PetListCard({ pet = null, isLoading = false }) {
           </p>
         </div>
       </div>
-      <div className="px-5 py-2 block mb-3">
+      <div className="block mb-4 ml-4">
         <Link
           to={`/pet-details/${pet?._id}`}
-          className="inline-block px-4 py-2 text-sm font-bold text-white bg-yellow-600 rounded-xl hover:bg-yellow-700 transition-all duration-200 ease-linear"
+          className={`inline-block px-4 py-2 text-sm font-bold text-white ${
+            !isLoading ? "bg-yellow-600" : "bg-slate-300"
+          } rounded-xl hover:bg-yellow-700 transition-all duration-200 ease-linear`}
         >
           {isLoading ? <Skeleton width={120} height={30} /> : "View Details"}
         </Link>

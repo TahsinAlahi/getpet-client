@@ -6,6 +6,7 @@ import router from "./routerRoute.jsx";
 import AuthProvider from "./providers/AuthProvider.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const queryClient = new QueryClient();
 
