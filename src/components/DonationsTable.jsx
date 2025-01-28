@@ -7,12 +7,22 @@ import {
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { FaTrash } from "react-icons/fa";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { toast } from "react-toastify";
 
-export default function DonationsTable({ data = [] }) {
+export default function DonationsTable({ data = [], refetch }) {
   const [sorting, setSorting] = useState([]);
+  const axiosSecure = useAxiosSecure();
 
-  function onRefund(id) {
-    console.log(id);
+  async function onRefund(id) {
+    try {
+      await axiosSecure.delete(`/donations/refund/${id}`);
+      toast.success("Donation refunded successfully");
+      refetch();
+    } catch (error) {
+      console.log(error?.message);
+      toast.error("Failed to refund, please try again later.");
+    }
   }
 
   const columns = useMemo(

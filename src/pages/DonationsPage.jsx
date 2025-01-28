@@ -18,7 +18,11 @@ function DonationsPage() {
     }
   }
 
-  const { data: usersDonations, isLoading } = useQuery({
+  const {
+    data: usersDonations,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["usersDonations"],
     queryFn: getDonations,
     staleTime: 5 * 60 * 1000,
@@ -38,7 +42,7 @@ function DonationsPage() {
               No Pets Added
             </h1>
           ) : (
-            <DonationsTable data={usersDonations} />
+            <DonationsTable data={usersDonations} refetch={refetch} />
           )}
         </div>
       </div>
