@@ -8,9 +8,37 @@ import {
 import { useMemo, useState } from "react";
 import { FaHeart, FaTrash } from "react-icons/fa";
 import { IoPencil } from "react-icons/io5";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-export default function PetTable({ data = [], onDelete, onAdopt, onEdit }) {
+export default function PetTable({ data = [], refetch }) {
   const [sorting, setSorting] = useState([]);
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+
+  async function onDelete(id) {
+    try {
+      await axiosSecure.delete(`/pets/${id}`);
+      toast.success("Pet deleted successfully");
+      refetch();
+    } catch (error) {
+      console.log(error?.message);
+      toast.error("Failed to delete pet. Please try again later.");
+    }
+  }
+
+  async function onAdopt(id, isAdopted) {
+    console.log(id, isAdopted);
+    try {
+      await axiosSecure.patch(`/pets/${id}`, { isAdopted: !isAdopted });
+      toast.success(`Pet ${isAdopted ? "unadopted" : "adopted"} successfully`);
+      refetch();
+    } catch (error) {
+      console.error(error?.message);
+      toast.error("Failed to adopt pet. Please try again later.");
+    }
+  }
 
   const columns = useMemo(
     () => [
@@ -80,33 +108,39 @@ export default function PetTable({ data = [], onDelete, onAdopt, onEdit }) {
         cell: (info) => (
           <div className="flex gap-2">
             <button
-              onClick={() => onEdit(info.row.original._id.$oid)}
+              onClick={() =>
+                navigate(`/dashboard/edit-pet/${info.row.original._id}`)
+              }
               className="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition"
               title="Edit"
             >
               <IoPencil size={18} />
             </button>
             <button
-              onClick={() => onDelete(info.row.original._id.$oid)}
+              onClick={() => onDelete(info.row.original._id)}
               className="p-2 rounded-md bg-red-500 text-white hover:bg-red-600 transition"
               title="Delete"
             >
               <FaTrash size={18} />
             </button>
-            {!info.row.original.isAdopted && (
-              <button
-                onClick={() => onAdopt(info.row.original._id.$oid)}
-                className="p-2 rounded-md bg-green-500 text-white hover:bg-green-600 transition"
-                title="Adopt"
-              >
-                <FaHeart size={18} />
-              </button>
-            )}
+            <button
+              onClick={() =>
+                onAdopt(info.row.original._id, info.row.original.isAdopted)
+              }
+              className={`p-2 rounded-md ${
+                info.row.original.isAdopted
+                  ? "bg-yellow-500 hover:bg-yellow-700"
+                  : "bg-green-500 hover:bg-green-600"
+              } text-white transition`}
+              title={info.row.original.isAdopted ? "Unadopt" : "Adopt"}
+            >
+              <FaHeart size={18} />
+            </button>
           </div>
         ),
       },
     ],
-    [onEdit, onDelete, onAdopt]
+    []
   );
 
   const table = useReactTable({

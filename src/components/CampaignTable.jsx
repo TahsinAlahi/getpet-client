@@ -11,7 +11,7 @@ import { FaEye } from "react-icons/fa6";
 import DonatorsModal from "./DonatorsModal";
 import { useNavigate } from "react-router-dom";
 
-export default function CampaignTable({ data = [], onEdit, onPause }) {
+export default function CampaignTable({ data = [], onPause }) {
   const [sorting, setSorting] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCampaign, setSelectedCampaign] = useState(null);
@@ -118,7 +118,7 @@ export default function CampaignTable({ data = [], onEdit, onPause }) {
         ),
       },
     ],
-    [onEdit, onPause]
+    []
   );
 
   const table = useReactTable({

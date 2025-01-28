@@ -15,6 +15,7 @@ import MyCampaignPage from "./pages/DashboardPages/MyCampaignPage";
 import EditCampaignPage from "./pages/DashboardPages/EditCampaignPage";
 import DonationsPage from "./pages/DashboardPages/DonationsPage";
 import UsersPage from "./pages/DashboardPages/UsersPage";
+import EditPetsPage from "./pages/DashboardPages/EditPetsPage";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
         element: <DashboardPage />,
         children: [
           { path: "add-pet", element: <AddPetPage /> },
+          { path: "edit-pet/:id", element: <EditPetsPage /> },
           { path: "added-pets", element: <AddedPetsPage /> },
           { path: "edit-campaign/:id", element: <EditCampaignPage /> },
           { path: "create-donation-campaign", element: <CreateCampaignPage /> },

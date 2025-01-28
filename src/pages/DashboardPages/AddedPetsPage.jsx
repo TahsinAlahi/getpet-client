@@ -16,24 +16,16 @@ function AddedPetsPage() {
     }
   }
 
-  function handleDelete(id) {
-    console.log(id);
-  }
-
-  function handleAdopt(id) {
-    console.log(id);
-  }
-
-  function handleEdit(id) {
-    console.log(id);
-  }
-
-  const { data: addedPets, isLoading } = useQuery({
+  const {
+    data: addedPets,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["addedPets"],
     queryFn: getAddedPets,
     staleTime: 5 * 60 * 1000,
     cacheTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
   });
 
   return (
@@ -48,12 +40,7 @@ function AddedPetsPage() {
               No Pets Added
             </h1>
           ) : (
-            <PetTable
-              data={addedPets}
-              onDelete={handleDelete}
-              onAdopt={handleAdopt}
-              onEdit={handleEdit}
-            />
+            <PetTable data={addedPets} refetch={refetch} />
           )}
         </div>
       </div>
