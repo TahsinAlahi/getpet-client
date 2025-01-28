@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 const adminMenuItems = [
   { title: "Users", link: "users" },
-  { title: "All pets", link: "all-pets" },
-  { title: "All donations", link: "all-donations" },
+  { title: "All Pets", link: "all-pets" },
+  { title: "All Campaigns", link: "all-campaigns" },
 ];
 
 function AdminDashBoard({ onClick }) {

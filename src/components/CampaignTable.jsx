@@ -41,6 +41,17 @@ export default function CampaignTable({ data = [], refetch }) {
         cell: (info) => info.row.index + 1,
       },
       {
+        accessorKey: "petImage",
+        header: "Image",
+        cell: (info) => (
+          <img
+            src={info.getValue()}
+            alt={info.row.original.petName}
+            className="w-16 h-16 rounded-lg border border-gray-300 object-cover shadow-sm flex items-center justify-center overflow-hidden"
+          />
+        ),
+      },
+      {
         accessorKey: "petName",
         header: "Name",
         cell: (info) => (
@@ -52,7 +63,7 @@ export default function CampaignTable({ data = [], refetch }) {
       {
         accessorKey: "maxDonationAmount",
         header: "Max Amount",
-        cell: (info) => `$${info.getValue().toFixed(2)}`,
+        cell: (info) => `$${info?.getValue()?.toFixed(2)}`,
       },
       {
         accessorKey: "donationAmount",
@@ -73,17 +84,17 @@ export default function CampaignTable({ data = [], refetch }) {
         },
       },
       {
-        accessorKey: "status",
+        accessorKey: "isPaused",
         header: "Status",
         cell: (info) => (
           <span
             className={`px-3 py-1 rounded-full text-xs font-medium ${
-              info.getValue() === "paused"
+              info?.getValue()
                 ? "bg-red-200 text-red-800"
                 : "bg-green-200 text-green-800"
             }`}
           >
-            {info.getValue() === "paused" ? "Paused" : "Active"}
+            {info?.getValue() ? "Paused" : "Active"}
           </span>
         ),
       },

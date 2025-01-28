@@ -5,7 +5,7 @@ const menuItems = [
   { title: "Added pets", link: "added-pets" },
   { title: "Adoption Request", link: "adoption-request" },
   { title: "Create Campaign", link: "create-donation-campaign" },
-  { title: "My Campaigns", link: "my-donation-campaigns" },
+  { title: "My Campaigns", link: "my-campaigns" },
   { title: "My Donations", link: "my-donations" },
 ];
 
