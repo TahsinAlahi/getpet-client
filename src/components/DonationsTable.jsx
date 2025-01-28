@@ -33,20 +33,20 @@ export default function DonationsTable({ data = [], refetch }) {
         cell: (info) => info.row.index + 1,
       },
       {
-        accessorKey: "petImage",
+        accessorKey: "campaignDetails.petImage",
         header: "Pet Image",
         cell: (info) => (
           <div className="w-full h-full flex items-center justify-center">
             <img
               src={info?.getValue()}
-              alt={info?.row?.original?.petName}
+              alt={info?.row?.original?.campaignDetails?.petName}
               className="w-16 h-16 rounded-md object-cover object-center flex items-center justify-center"
             />
           </div>
         ),
       },
       {
-        accessorKey: "petName",
+        accessorKey: "campaignDetails.petName",
         header: "Pet Name",
         cell: (info) => (
           <p className="font-semibold text-gray-800">{info?.getValue()}</p>

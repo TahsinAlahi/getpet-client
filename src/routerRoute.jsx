@@ -85,6 +85,7 @@ const router = createBrowserRouter([
           <ProtectedRoute>{SuspenseWrapper(DashboardPage)}</ProtectedRoute>
         ),
         children: [
+          { path: "", element: SuspenseWrapper(AddPetPage) },
           {
             path: "add-pet",
             element: SuspenseWrapper(AddPetPage),
