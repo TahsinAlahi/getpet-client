@@ -1,55 +1,142 @@
+import { Suspense, lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
-import Homepage from "./pages/Homepage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import DashboardPage from "./pages/DashboardPage";
-import AddPetPage from "./pages/DashboardPages/AddPetPage";
-import AddedPetsPage from "./pages/DashboardPages/AddedPetsPage";
-import PetListingPage from "./pages/PetListingPage";
-import PetDetailPage from "./pages/PetDetailPage";
-import CampaignsPage from "./pages/CampaignsPage";
-import CampaignDetailsPage from "./pages/CampaignDetailsPage";
-import CreateCampaignPage from "./pages/DashboardPages/CreateCampaignPage";
-import MyCampaignPage from "./pages/DashboardPages/MyCampaignPage";
-import EditCampaignPage from "./pages/DashboardPages/EditCampaignPage";
-import DonationsPage from "./pages/DashboardPages/DonationsPage";
-import UsersPage from "./pages/DashboardPages/UsersPage";
-import EditPetsPage from "./pages/DashboardPages/EditPetsPage";
-import AllPetsPage from "./pages/DashboardPages/AllPetsPage";
-import AllCampaignsPage from "./pages/DashboardPages/AllCampaignsPage";
-import RequestPage from "./pages/DashboardPages/RequestPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Loader from "./components/Loader";
+
+const Homepage = lazy(() => import("./pages/HomePage"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const RegisterPage = lazy(() => import("./pages/RegisterPage"));
+const PetListingPage = lazy(() => import("./pages/PetListingPage"));
+const PetDetailPage = lazy(() => import("./pages/PetDetailPage"));
+const CampaignsPage = lazy(() => import("./pages/CampaignsPage"));
+const CampaignDetailsPage = lazy(() => import("./pages/CampaignDetailsPage"));
+const DashboardPage = lazy(() => import("./pages/DashboardPage"));
+const AddPetPage = lazy(() => import("./pages/DashboardPages/AddPetPage"));
+const AddedPetsPage = lazy(() =>
+  import("./pages/DashboardPages/AddedPetsPage")
+);
+const EditPetsPage = lazy(() => import("./pages/DashboardPages/EditPetsPage"));
+const CreateCampaignPage = lazy(() =>
+  import("./pages/DashboardPages/CreateCampaignPage")
+);
+const MyCampaignPage = lazy(() =>
+  import("./pages/DashboardPages/MyCampaignPage")
+);
+const EditCampaignPage = lazy(() =>
+  import("./pages/DashboardPages/EditCampaignPage")
+);
+const DonationsPage = lazy(() =>
+  import("./pages/DashboardPages/DonationsPage")
+);
+const UsersPage = lazy(() => import("./pages/DashboardPages/UsersPage"));
+const AllPetsPage = lazy(() => import("./pages/DashboardPages/AllPetsPage"));
+const AllCampaignsPage = lazy(() =>
+  import("./pages/DashboardPages/AllCampaignsPage")
+);
+const RequestPage = lazy(() => import("./pages/DashboardPages/RequestPage"));
+
+function SuspenseWrapper(Component) {
+  return (
+    <Suspense fallback={<Loader />}>
+      <Component />
+    </Suspense>
+  );
+}
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <AppLayout />,
     children: [
-      { path: "/", element: <Homepage /> },
-      { path: "/pet-listing", element: <PetListingPage /> },
-      { path: "/pet-details/:id", element: <PetDetailPage /> },
-      { path: "/donation-campaigns", element: <CampaignsPage /> },
+      {
+        path: "/",
+        element: SuspenseWrapper(Homepage),
+      },
+      {
+        path: "/pet-listing",
+        element: SuspenseWrapper(PetListingPage),
+      },
+      {
+        path: "/pet-details/:id",
+        element: SuspenseWrapper(PetDetailPage),
+      },
+      {
+        path: "/donation-campaigns",
+        element: SuspenseWrapper(CampaignsPage),
+      },
       {
         path: "/campaign-details/:id",
-        element: <CampaignDetailsPage />,
+        element: SuspenseWrapper(CampaignDetailsPage),
       },
-      { path: "/login", element: <LoginPage /> },
-      { path: "/register", element: <RegisterPage /> },
+      {
+        path: "/login",
+        element: SuspenseWrapper(LoginPage),
+      },
+      {
+        path: "/register",
+        element: SuspenseWrapper(RegisterPage),
+      },
       {
         path: "/dashboard",
-        element: <DashboardPage />,
+        element: SuspenseWrapper(DashboardPage),
         children: [
-          { path: "add-pet", element: <AddPetPage /> },
-          { path: "edit-pet/:id", element: <EditPetsPage /> },
-          { path: "added-pets", element: <AddedPetsPage /> },
-          { path: "edit-campaign/:id", element: <EditCampaignPage /> },
-          { path: "create-donation-campaign", element: <CreateCampaignPage /> },
-          { path: "my-campaigns", element: <MyCampaignPage /> },
-          { path: "adoption-request", element: <RequestPage /> },
-          { path: "my-donations", element: <DonationsPage /> },
-          { path: "users", element: <UsersPage /> },
-          { path: "all-pets", element: <AllPetsPage /> },
-          { path: "all-campaigns", element: <AllCampaignsPage /> },
+          {
+            path: "add-pet",
+            element: (
+              <ProtectedRoute>{SuspenseWrapper(AddPetPage)}</ProtectedRoute>
+            ),
+          },
+          {
+            path: "edit-pet/:id",
+            element: (
+              <ProtectedRoute>{SuspenseWrapper(EditPetsPage)}</ProtectedRoute>
+            ),
+          },
+          {
+            path: "added-pets",
+            element: SuspenseWrapper(AddedPetsPage),
+          },
+          {
+            path: "edit-campaign/:id",
+            element: (
+              <ProtectedRoute>
+                {SuspenseWrapper(EditCampaignPage)}
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "create-donation-campaign",
+            element: (
+              <ProtectedRoute>
+                {SuspenseWrapper(CreateCampaignPage)}
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "my-campaigns",
+            element: SuspenseWrapper(MyCampaignPage),
+          },
+          {
+            path: "adoption-request",
+            element: SuspenseWrapper(RequestPage),
+          },
+          {
+            path: "my-donations",
+            element: SuspenseWrapper(DonationsPage),
+          },
+          {
+            path: "users",
+            element: SuspenseWrapper(UsersPage),
+          },
+          {
+            path: "all-pets",
+            element: SuspenseWrapper(AllPetsPage),
+          },
+          {
+            path: "all-campaigns",
+            element: SuspenseWrapper(AllCampaignsPage),
+          },
         ],
       },
     ],
