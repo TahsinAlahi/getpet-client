@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import useAdmin from "../hooks/useAdmin";
 
 const adminMenuItems = [
   { title: "Users", link: "users" },
@@ -7,21 +8,25 @@ const adminMenuItems = [
 ];
 
 function AdminDashBoard({ onClick }) {
+  const { isAdmin } = useAdmin();
+
   return (
-    <div className="lg:w-44 w-64 text-black dark:text-white mt-4">
-      <h1 className="text-center lg:text-left font-nunito text-lg font-bold mb-1">
-        Admin DashBoard
-      </h1>
-      <ul className="text-center lg:text-left divide-y divide-black">
-        {adminMenuItems.map((item) => (
-          <li key={item.link} onClick={onClick}>
-            <Link className="py-2 block" to={item.link}>
-              {item.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+    isAdmin && (
+      <div className="lg:w-44 w-64 text-black dark:text-white mt-4">
+        <h1 className="text-center lg:text-left font-nunito text-lg font-bold mb-1">
+          Admin DashBoard
+        </h1>
+        <ul className="text-center lg:text-left divide-y divide-black">
+          {adminMenuItems.map((item) => (
+            <li key={item.link} onClick={onClick}>
+              <Link className="py-2 block" to={item.link}>
+                {item.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
   );
 }
 

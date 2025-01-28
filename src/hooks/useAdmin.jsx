@@ -8,20 +8,21 @@ function useAdmin() {
   const { isAuthLoading, user } = useAuth();
   const [hasFetched, setHasFetched] = useState(false);
 
-  const { data: isAdmin = false, isLoading: isAdminLoading = false } = useQuery(
-    {
-      enabled: !isAuthLoading && !hasFetched,
-      queryKey: ["admin", user?.email],
-      queryFn: async () => {
-        const res = await axiosSecure.get(`admins/${user?.email}`);
-        return res.data?.isAdmin;
-      },
-      refetchOnWindowFocus: false,
-      onSuccess: () => {
-        setHasFetched(true);
-      },
-    }
-  );
+  const { data: isAdmin, isLoading: isAdminLoading = false } = useQuery({
+    enabled: !isAuthLoading && !hasFetched,
+    queryKey: ["admin", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`admins/${user?.email}`);
+      console.log(res.data);
+      return res.data?.isAdmin;
+    },
+    refetchOnWindowFocus: false,
+    onSuccess: () => {
+      setHasFetched(true);
+    },
+  });
+
+  // console.log(isAdmin);
 
   return { isAdmin, isAdminLoading };
 }

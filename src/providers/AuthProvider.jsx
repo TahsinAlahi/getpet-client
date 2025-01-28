@@ -192,6 +192,8 @@ function AuthProvider({ children }) {
           setUser(currUser);
           await axiosPublic.post("/jwt/login", {
             email: currUser.email,
+            name: currUser.displayName,
+            imageUrl: currUser.photoURL,
           });
         } else {
           setUser(null);
