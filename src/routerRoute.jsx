@@ -10,10 +10,10 @@ import PetListingPage from "./pages/PetListingPage";
 import PetDetailPage from "./pages/PetDetailPage";
 import CampaignsPage from "./pages/CampaignsPage";
 import CampaignDetailsPage from "./pages/CampaignDetailsPage";
-import CreateCampaignPage from "./pages/CreateCampaignPage";
-import MyCampaignPage from "./pages/MyCampaignPage";
-import EditCampaignPage from "./pages/EditCampaignPage";
-import DonationsPage from "./pages/DonationsPage";
+import CreateCampaignPage from "./pages/DashboardPages/CreateCampaignPage";
+import MyCampaignPage from "./pages/DashboardPages/MyCampaignPage";
+import EditCampaignPage from "./pages/DashboardPages/EditCampaignPage";
+import DonationsPage from "./pages/DashboardPages/DonationsPage";
 
 const router = createBrowserRouter([
   {

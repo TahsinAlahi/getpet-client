@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import { useAuth } from "../providers/AuthProvider";
-import useAxiosSecure from "../hooks/useAxiosSecure";
-import CampaignTable from "../components/CampaignTable";
+import { useAuth } from "../../providers/AuthProvider";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import CampaignTable from "../../components/CampaignTable";
 
 function MyCampaignPage() {
   const axiosSecure = useAxiosSecure();

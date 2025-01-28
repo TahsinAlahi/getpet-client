@@ -1,24 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useAuth } from "../providers/AuthProvider";
-import useAxiosSecure from "../hooks/useAxiosSecure";
-import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const IMAGE_BB_API_KEY = import.meta.env.VITE_IMAGE_BB_API_KEY;
 
-function CreateCampaignPage() {
+function EditCampaignPage() {
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    async function fetchCampaignData() {
+      try {
+        const response = await axiosSecure.get(`/campaigns/${id}`);
+        console.log(response.data?.campaign);
+        const campaign = response.data?.campaign;
+        setValue("petName", campaign.petName);
+        setValue("maxDonationAmount", campaign.maxDonationAmount);
+        const formattedDate = campaign.lastDateToDonate.split("T")[0];
+        setValue("lastDateToDonate", formattedDate);
+        setValue("shortDescription", campaign.shortDescription);
+        setValue("longDescription", campaign.longDescription);
+        setImageUrl(campaign.petImage);
+      } catch (error) {
+        console.error(error?.message);
+      }
+    }
+    fetchCampaignData();
+  }, []);
 
   async function handleImageUpload(event) {
     const file = event.target.files[0];
@@ -35,32 +56,27 @@ function CreateCampaignPage() {
       );
       setImageUrl(response.data.data.url);
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error(error);
+      toast.error("Failed to upload image.");
     } finally {
       setLoading(false);
     }
   }
 
   async function onSubmit(data) {
-    if (!imageUrl) {
-      alert("Please upload a pet image.");
-      return;
-    }
-
-    const campaignData = {
+    const updatedCampaignData = {
       ...data,
-      advertiserEmail: user?.email,
+      lastDateToDonate: new Date(data.lastDateToDonate).toISOString(),
       petImage: imageUrl,
       maxDonationAmount: Number(data.maxDonationAmount),
     };
 
     try {
-      const res = await axiosSecure.post(
-        "/campaigns/create-campaign",
-        campaignData
-      );
-      navigate("/campaigns");
+      await axiosSecure.patch(`/campaigns/${id}`, updatedCampaignData);
+      toast.success("Campaign updated successfully");
+      navigate("/dashboard/my-donation-campaigns");
     } catch (error) {
+      toast.error("Failed to update campaign, please try again later.");
       console.error(error.message);
     }
   }
@@ -68,7 +84,7 @@ function CreateCampaignPage() {
   return (
     <main className="min-h-screen w-full max-w-screen-md mx-auto py-10">
       <h1 className="text-4xl font-bold text-center mb-6">
-        Create Donation Campaign
+        Edit Donation Campaign
       </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
@@ -78,10 +94,9 @@ function CreateCampaignPage() {
             {...register("petName", {
               required: "Pet name is required",
             })}
-            placeholder="Enter pet name"
             className="border rounded-md px-3 py-2 w-full"
           />
-          {errors.shortDescription && (
+          {errors.petName && (
             <p className="text-red-500">{errors.petName.message}</p>
           )}
         </div>
@@ -94,8 +109,6 @@ function CreateCampaignPage() {
               required: "Maximum donation amount is required",
               min: 0,
             })}
-            step={0.1}
-            placeholder="Enter max donation amount"
             className="border rounded-md px-3 py-2 w-full"
           />
           {errors.maxDonationAmount && (
@@ -109,14 +122,6 @@ function CreateCampaignPage() {
             type="date"
             {...register("lastDateToDonate", {
               required: "Last date is required",
-              validate: (value) => {
-                const selectedDate = new Date(value);
-                const today = new Date();
-                today.setHours(0, 0, 0, 0); // Ensure time is ignored in comparison
-                return (
-                  selectedDate >= today || "Last date cannot be in the past"
-                );
-              },
             })}
             className="border rounded-md px-3 py-2 w-full"
           />
@@ -132,7 +137,6 @@ function CreateCampaignPage() {
             {...register("shortDescription", {
               required: "Short description is required",
             })}
-            placeholder="Enter short description"
             className="border rounded-md px-3 py-2 w-full"
           />
           {errors.shortDescription && (
@@ -146,7 +150,6 @@ function CreateCampaignPage() {
             {...register("longDescription", {
               required: "Long description is required",
             })}
-            placeholder="Enter long description"
             className="border rounded-md px-3 py-2 w-full"
           />
           {errors.longDescription && (
@@ -161,8 +164,6 @@ function CreateCampaignPage() {
             accept="image/*"
             className="border rounded-md px-3 py-2 w-full"
             onChange={handleImageUpload}
-            placeholder="Upload Pet Picture"
-            required
           />
           {loading && <p className="text-blue-500">Uploading...</p>}
           {imageUrl && (
@@ -175,11 +176,11 @@ function CreateCampaignPage() {
           className="w-full bg-blue-500 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition-all"
           disabled={loading}
         >
-          {loading ? "Submitting..." : "Create Campaign"}
+          {loading ? "Submitting..." : "Update Campaign"}
         </button>
       </form>
     </main>
   );
 }
 
-export default CreateCampaignPage;
+export default EditCampaignPage;
