@@ -26,6 +26,8 @@ function AdoptionModal({ petData, isModalOpen, setIsModalOpen }) {
       userEmail: user?.email,
       userPhone: data.phoneNumber,
       userAddress: data.address,
+      petImage: petData?.petImage,
+      petName: petData?.petName,
     };
 
     try {

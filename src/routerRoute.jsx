@@ -39,10 +39,7 @@ const router = createBrowserRouter([
           { path: "edit-campaign/:id", element: <EditCampaignPage /> },
           { path: "create-donation-campaign", element: <CreateCampaignPage /> },
           { path: "my-donation-campaigns", element: <MyCampaignPage /> },
-          {
-            path: "my-donations",
-            element: <DonationsPage />,
-          },
+          { path: "my-donations", element: <DonationsPage /> },
         ],
       },
     ],

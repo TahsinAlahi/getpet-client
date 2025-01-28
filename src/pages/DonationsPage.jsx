@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useAuth } from "../providers/AuthProvider";
+import DonationsTable from "../components/DonationsTable";
 
 function DonationsPage() {
   const axiosSecure = useAxiosSecure();
@@ -37,7 +38,7 @@ function DonationsPage() {
               No Pets Added
             </h1>
           ) : (
-            <></>
+            <DonationsTable data={usersDonations} />
           )}
         </div>
       </div>
