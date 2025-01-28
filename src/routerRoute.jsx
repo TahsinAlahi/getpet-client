@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Loader from "./components/Loader";
+import useAdmin from "./hooks/useAdmin";
 
 const Homepage = lazy(() => import("./pages/HomePage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
@@ -79,19 +80,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: SuspenseWrapper(DashboardPage),
+        element: (
+          <ProtectedRoute>{SuspenseWrapper(DashboardPage)}</ProtectedRoute>
+        ),
         children: [
           {
             path: "add-pet",
-            element: (
-              <ProtectedRoute>{SuspenseWrapper(AddPetPage)}</ProtectedRoute>
-            ),
+            element: SuspenseWrapper(AddPetPage),
           },
           {
             path: "edit-pet/:id",
-            element: (
-              <ProtectedRoute>{SuspenseWrapper(EditPetsPage)}</ProtectedRoute>
-            ),
+            element: SuspenseWrapper(EditPetsPage),
           },
           {
             path: "added-pets",
@@ -99,19 +98,11 @@ const router = createBrowserRouter([
           },
           {
             path: "edit-campaign/:id",
-            element: (
-              <ProtectedRoute>
-                {SuspenseWrapper(EditCampaignPage)}
-              </ProtectedRoute>
-            ),
+            element: SuspenseWrapper(EditCampaignPage),
           },
           {
             path: "create-donation-campaign",
-            element: (
-              <ProtectedRoute>
-                {SuspenseWrapper(CreateCampaignPage)}
-              </ProtectedRoute>
-            ),
+            element: SuspenseWrapper(CreateCampaignPage),
           },
           {
             path: "my-campaigns",
