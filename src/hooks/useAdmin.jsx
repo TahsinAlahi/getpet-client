@@ -13,7 +13,6 @@ function useAdmin() {
     queryKey: ["admin", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`admins/${user?.email}`);
-      console.log(res.data);
       return res.data?.isAdmin;
     },
     refetchOnWindowFocus: false,

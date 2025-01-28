@@ -16,6 +16,7 @@ function AdminDashBoard({ onClick }) {
         <h1 className="text-center lg:text-left font-nunito text-lg font-bold mb-1">
           Admin DashBoard
         </h1>
+
         <ul className="text-center lg:text-left divide-y divide-black">
           {adminMenuItems.map((item) => (
             <li key={item.link} onClick={onClick}>

@@ -4,6 +4,7 @@ import AppLayout from "./layouts/AppLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Loader from "./components/Loader";
 import useAdmin from "./hooks/useAdmin";
+import ProtectAdmin from "./components/ProtectAdmin";
 
 const Homepage = lazy(() => import("./pages/HomePage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
@@ -118,15 +119,19 @@ const router = createBrowserRouter([
           },
           {
             path: "users",
-            element: SuspenseWrapper(UsersPage),
+            element: <ProtectAdmin>{SuspenseWrapper(UsersPage)}</ProtectAdmin>,
           },
           {
             path: "all-pets",
-            element: SuspenseWrapper(AllPetsPage),
+            element: (
+              <ProtectAdmin>{SuspenseWrapper(AllPetsPage)}</ProtectAdmin>
+            ),
           },
           {
             path: "all-campaigns",
-            element: SuspenseWrapper(AllCampaignsPage),
+            element: (
+              <ProtectAdmin>{SuspenseWrapper(AllCampaignsPage)}</ProtectAdmin>
+            ),
           },
         ],
       },
