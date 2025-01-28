@@ -10,12 +10,28 @@ import { FaPause, FaPlay, FaPencilAlt } from "react-icons/fa";
 import { FaEye } from "react-icons/fa6";
 import DonatorsModal from "./DonatorsModal";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
-export default function CampaignTable({ data = [], onPause }) {
+export default function CampaignTable({ data = [], refetch }) {
   const [sorting, setSorting] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCampaign, setSelectedCampaign] = useState(null);
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
+
+  async function handlePause(id, isPaused) {
+    try {
+      await axiosSecure.patch(`/campaigns/${id}`, { isPaused: !isPaused });
+      toast.success(
+        `Campaign ${isPaused ? "unpaused" : "paused"} successfully`
+      );
+      refetch();
+    } catch (error) {
+      console.error(error?.message);
+      toast.error("Failed to pause campaign. Please try again later.");
+    }
+  }
 
   const columns = useMemo(
     () => [
@@ -97,18 +113,14 @@ export default function CampaignTable({ data = [], onPause }) {
             </button>
             <button
               onClick={() =>
-                onPause(info.row.original._id, info.row.original.status)
+                handlePause(info.row.original._id, info.row.original.isPaused)
               }
               className={`p-2 rounded-md ${
-                info.row.original.status === "paused"
-                  ? "bg-green-500"
-                  : "bg-red-500"
+                info.row.original.isPaused ? "bg-green-500" : "bg-red-500"
               } text-white hover:bg-opacity-80 transition`}
-              title={
-                info.row.original.status === "paused" ? "Unpause" : "Pause"
-              }
+              title={info.row.original.isPaused ? "Unpause" : "Pause"}
             >
-              {info.row.original.status === "paused" ? (
+              {info.row.original.isPaused ? (
                 <FaPlay size={18} />
               ) : (
                 <FaPause size={18} />

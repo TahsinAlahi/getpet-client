@@ -18,21 +18,11 @@ function MyCampaignPage() {
     }
   }
 
-  function handleEdit(id) {
-    console.log(id);
-  }
-
-  async function handlePause(id, status) {
-    try {
-      // const newStatus = status === "paused" ? "active" : "paused";
-      // await axiosSecure.put(`/donations/${id}/pause`, { status: newStatus });
-      console.log(id, status);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const { data: donations, isLoading } = useQuery({
+  const {
+    data: donations,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["userDonations"],
     queryFn: getUserDonations,
     staleTime: 5 * 60 * 1000,
@@ -52,11 +42,7 @@ function MyCampaignPage() {
               No Donations Requested
             </h1>
           ) : (
-            <CampaignTable
-              data={donations}
-              onEdit={handleEdit}
-              onPause={handlePause}
-            />
+            <CampaignTable data={donations} refetch={refetch} />
           )}
         </div>
       </div>
