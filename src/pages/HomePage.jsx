@@ -1,6 +1,7 @@
 import AboutUs from "../components/AboutUs";
 import CallToAction from "../components/CallToAction";
 import CategoryCards from "../components/CategoryCards";
+import CountrySection from "../components/CountrySection";
 import Header from "../components/Header";
 import Newsletter from "../components/Newsletter";
 
@@ -11,6 +12,7 @@ function Homepage() {
       <CategoryCards />
       <CallToAction />
       <AboutUs />
+      <CountrySection />
       <Newsletter />
     </div>
   );
