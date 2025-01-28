@@ -13,7 +13,7 @@ function PetListingPage() {
     },
     staleTime: 5 * 60 * 1000,
     cacheTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
   });
 
   return (
@@ -23,9 +23,11 @@ function PetListingPage() {
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:w-4/5 w-full px-5 md:px-0  mx-auto">
-        {pets?.map((pet) => (
-          <PetListCard key={pet._id} pet={pet} />
-        ))}
+        {isLoading
+          ? Array.from({ length: 8 }).map((_, index) => (
+              <PetListCard key={index} isLoading />
+            ))
+          : pets?.map((pet) => <PetListCard key={pet._id} pet={pet} />)}
       </div>
     </main>
   );
