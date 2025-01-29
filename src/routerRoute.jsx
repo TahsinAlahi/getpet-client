@@ -61,7 +61,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/pet-details/:id",
-        element: SuspenseWrapper(PetDetailPage),
+        element: (
+          <ProtectedRoute>{SuspenseWrapper(PetDetailPage)}</ProtectedRoute>
+        ),
       },
       {
         path: "/donation-campaigns",
@@ -69,7 +71,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/campaign-details/:id",
-        element: SuspenseWrapper(CampaignDetailsPage),
+        element: (
+          <ProtectedRoute>
+            {SuspenseWrapper(CampaignDetailsPage)}
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/login",
