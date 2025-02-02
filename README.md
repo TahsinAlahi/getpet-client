@@ -1,6 +1,6 @@
-# GetPet Client
+# [GetPet Client](https://getpet-adoption.vercel.app/)
 
-**GetPet** is a modern pet adoption platform allowing users to list, adopt, and manage pet adoption campaigns. This repository contains the client-side code, built with React, Vite, and other cutting-edge technologies for an engaging and responsive user experience.
+[**GetPet**](https://getpet-adoption.vercel.app/) is a modern pet adoption platform allowing users to list, adopt, and manage pet adoption campaigns. This repository contains the client-side code, built with React, Vite, and other cutting-edge technologies for an engaging and responsive user experience.
 
 ---
 
@@ -14,6 +14,7 @@
 - [Scripts](#scripts)
 - [Dependencies](#dependencies)
 - [Dev Dependencies](#dev-dependencies)
+- [Backend Repository](#backend-repository)
 - [License](#license)
 - [Author](#author)
 
@@ -182,6 +183,12 @@ VITE_IMAGE_BB_API_KEY=your-image-bb-api-key
 
 ---
 
+## Backend Repository:
+
+Check out the backend repository: [**GetPet Server**](https://github.com/TahsinAlahi/GetPet-Server)
+
+---
+
 ## License
 
 This project is licensed under the ISC License.
@@ -190,6 +197,6 @@ This project is licensed under the ISC License.
 
 ## Author
 
-- **Your Name**
+- **Tahsin Alahi**
   - [GitHub](https://github.com/TahsinAlahi)
   - [LinkedIn](https://www.linkedin.com/in/TahsinAlahi/)
